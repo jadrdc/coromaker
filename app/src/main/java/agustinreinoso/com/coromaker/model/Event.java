@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity(tableName = "events")
 public class Event {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private String description;
     private Date date;
