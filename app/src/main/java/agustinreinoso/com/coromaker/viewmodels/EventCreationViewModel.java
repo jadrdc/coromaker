@@ -28,17 +28,20 @@ public class EventCreationViewModel extends AndroidViewModel {
 
 
     public void saveEvent(final Event event) {
-        if (repository == null) {
-            repository = new EventRoomRepository(getApplication());
-        }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                repository.save(event);
-                inProgress.postValue(false);
-            }
-        }).start();
 
+        try {
+            Thread.sleep(5000);
+            if (repository == null) {
+                repository = new EventRoomRepository(getApplication());
+            }
+
+            repository.save(event);
+
+            inProgress.postValue(false);
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 

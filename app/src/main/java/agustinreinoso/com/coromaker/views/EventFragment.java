@@ -12,10 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,7 +59,9 @@ public class EventFragment extends Fragment {
                 if (aBoolean) {
                     visible = View.VISIBLE;
                 } else {
+                  Toast.makeText(getContext(),"SE HA GUARDADO EL NUEVO EVENTO",Toast.LENGTH_LONG).show();
                     visible = View.INVISIBLE;
+
                 }
                 progressBar.setVisibility(visible);
             }
@@ -73,9 +72,9 @@ public class EventFragment extends Fragment {
 
     @OnClick(R.id.button_save)
     public void onClickSave(View view) {
-
         eventCreationViewModel.getInProgress().setValue(true);
-        Event event = new Event();
+
+        final Event event = new Event();
         event.setDescription(editTextName.getText().toString());
         int year = datePicker.getYear();
         int month = datePicker.getMonth();
@@ -88,7 +87,13 @@ public class EventFragment extends Fragment {
             e.printStackTrace();
         }
         event.setDate(date);
-        eventCreationViewModel.saveEvent(event);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                eventCreationViewModel.saveEvent(event);
+
+            }
+        }).start();
     }
 
 }
