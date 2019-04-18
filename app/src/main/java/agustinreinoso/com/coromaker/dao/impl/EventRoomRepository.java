@@ -31,4 +31,9 @@ public class EventRoomRepository implements EventRepository {
     public LiveData<List<Event>> getEvents(Date startdate, Date endate) {
         return db.getEventDao().getEvents(startdate,endate);
     }
+
+    @Override
+    public LiveData<List<Event>> getEvents() {
+        return db.getEventDao().getEvents();
+    }
 }

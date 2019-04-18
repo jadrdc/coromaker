@@ -14,11 +14,30 @@ import java.util.List;
 public class EventDisplayViewModel extends AndroidViewModel {
 
 
-    private MutableLiveData<List<Event>> listEvents;
+    public MutableLiveData<List<Event>> getListEvents() {
+        return listEvents;
+    }
+
+    private MutableLiveData<List<Event>> listEvents = new MutableLiveData<>();
     private EventRepository repository;
 
     public EventDisplayViewModel(@NonNull Application application) {
         super(application);
+    }
+
+
+    public void getEvents() {
+        if (repository == null) {
+            repository = new EventRoomRepository(getApplication());
+        }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                listEvents.postValue(repository.getEvents().getValue());
+            }
+        })
+                .start();
     }
 
     public void setEvents(final Date datefrom, final Date dateto) {
@@ -29,7 +48,7 @@ public class EventDisplayViewModel extends AndroidViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                listEvents.setValue(repository.getEvents(datefrom, dateto).getValue());
+                listEvents.postValue(repository.getEvents(datefrom, dateto).getValue());
             }
         }).start();
 

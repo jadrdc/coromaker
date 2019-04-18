@@ -16,5 +16,6 @@ public interface EventDao {
 
     @Query("Select * from events e where e.date between :startdate and :endate")
     LiveData<List<Event>> getEvents(Date startdate , Date endate);
-
+    @Query("Select * from events e")
+    LiveData<List<Event>> getEvents();
 }
