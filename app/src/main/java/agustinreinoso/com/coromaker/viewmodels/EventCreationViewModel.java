@@ -35,7 +35,7 @@ public class EventCreationViewModel extends AndroidViewModel {
                 repository = new EventRoomRepository(getApplication());
             }
 
-            repository.save(event);
+            long id = repository.save(event);
 
             inProgress.postValue(false);
 

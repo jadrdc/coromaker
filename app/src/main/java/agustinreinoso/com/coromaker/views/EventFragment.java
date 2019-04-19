@@ -90,6 +90,7 @@ public class EventFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 eventCreationViewModel.saveEvent(event);
 
             }

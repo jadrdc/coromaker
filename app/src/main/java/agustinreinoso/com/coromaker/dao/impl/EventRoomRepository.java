@@ -23,8 +23,8 @@ public class EventRoomRepository implements EventRepository {
     }
 
     @Override
-    public void save(final Event event) {
-        db.getEventDao().save(event);
+    public long  save(final Event event) {
+      return   db.getEventDao().save(event);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class EventRoomRepository implements EventRepository {
     }
 
     @Override
-    public LiveData<List<Event>> getEvents() {
+    public List<Event> getEvents() {
         return db.getEventDao().getEvents();
     }
 }

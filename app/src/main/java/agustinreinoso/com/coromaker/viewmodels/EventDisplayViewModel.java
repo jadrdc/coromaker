@@ -34,10 +34,10 @@ public class EventDisplayViewModel extends AndroidViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                listEvents.postValue(repository.getEvents().getValue());
-            }
-        })
-                .start();
+                List<Event> events = repository.getEvents();
+                listEvents.postValue(events);
+            }}).start();
+
     }
 
     public void setEvents(final Date datefrom, final Date dateto) {
